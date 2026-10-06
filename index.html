@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="#090c0f" name="theme-color"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" name="viewport"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="The Last Port" name="apple-mobile-web-app-title"/>
+<title>The Last Port · v9.70</title>
+<link href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTMiIGZpbGw9IiMxOTIyMWIiLz48cGF0aCBkPSJNMzIgNyA1NCAxNnYyNEwzMiA1OCAxMCA0MFYxNloiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2M5YWM3MiIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48cGF0aCBkPSJNMjAgMzhWMjNsNS0zdjEzbDQtM1YxNmw1LTN2MTdsNSAzVjIwbDUgM3YxNWwtMTIgMTFaIiBmaWxsPSIjYzlhYzcyIi8+PC9zdmc+" rel="icon" type="image/svg+xml"/>
+
+<link href="css/style.css" rel="stylesheet"/></head>
+<body>
+<div id="rotHint"><div class="rot-ico">📱</div><b>Поверни телефон</b><span>«Час тревоги» — игра для портретного экрана. Поверни устройство, чтобы играть.</span></div>
+<div id="dmgVig"></div>
+<div id="winVig"></div>
+<div class="hud-aaa" id="app">
+<div class="tkr"><span id="ticker">⚠ Волна зомби приближается! | 🎁 44-главная кампания «Час тревоги» — кат-сцены и живая рация в пути! | 📢 Прокачивайте Ратушу, чтобы открывать новые здания!</span></div>
+<div class="hud-top">
+<div class="hud-id">
+<div class="pa"><img alt="Командир" data-ri="cmdr" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA=" style="width:100%;height:100%;object-fit:cover;border-radius:6px"/><span class="pa-lv" id="plvBadge">1</span></div>
+<div class="hud-namecol">
+<span class="pn" id="pn2">Выживший</span><span id="ptitle" style="display:none;font-size:9px;font-weight:700;color:#fbbf24;letter-spacing:.3px"></span>
+<span class="hud-pow">⚔ <span id="ppw">0</span></span>
+<span class="hud-vip">👑 VIP <span id="pvip">1</span></span>
+<span class="hud-might">⚜ <span id="pmight">0</span></span>
+</div>
+</div>
+<div class="hud-res">
+<div class="rp f"><img alt="food" class="res-ic" data-ri="food" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><span id="rfTop">500</span><button class="rp-plus" onclick="G.tab('base','trade')">+</button></div>
+<div class="rp w"><img alt="wood" class="res-ic" data-ri="wood" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><span id="rw">300</span><button class="rp-plus" onclick="G.tab('base','trade')">+</button></div>
+<div class="rp m"><img alt="metal" class="res-ic" data-ri="metal" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><span id="rm">150</span><button class="rp-plus" onclick="G.tab('base','trade')">+</button></div>
+<div class="rp g"><img alt="gems" class="res-ic" data-ri="gems" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><span id="rg">50</span><button class="rp-plus" onclick="G.tab('social','daily')">+</button></div>
+<button class="hud-ico" onclick="G.tab('base','trade')" title="Магазин">🛒</button>
+<button class="hud-ico" onclick="G.toggleSheet()" title="Меню">☰</button>
+</div>
+</div>
+<div class="hud-timers">
+<span class="ht-f" style="display:none">🍖 <span id="rf">500</span></span>
+<span class="ht-e"><img alt="⚡" class="eic" data-ri="energy" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/> <span id="re">120</span></span>
+<span class="ht-d" id="dn">☀ Д1</span>
+<span class="ht-g" id="clk">08:00</span>
+<span id="wthd" style="display:none"></span>
+<span id="seasonBar" style="display:none"></span>
+<span id="plv" style="display:none">1</span>
+<div class="px" style="display:none"><div class="pxf" id="pxp"></div></div>
+</div>
+<div class="hud-left">
+<div class="hud-bld-group" style="display:flex;align-items:center;gap:4px">
+<button onclick="G.toggleSheet()" title="Постройки" type="button"><img alt="" class="hic hic-sq" data-ri="wrk" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><small id="bldQ">0/3</small></button>
+<div id="bldActionsWrap" style="display:flex;flex-direction:row;gap:3px">
+<button id="spdBld" onclick="G.speedupBuild()" style="display:none" title="Ускорить стройку" type="button"><span>⏱</span></button>
+<button id="cnlBld" onclick="G.cancelBuild()" style="display:none" title="Отменить стройку" type="button"><span>✖</span></button>
+</div>
+</div>
+<div id="bldBarWrap" style="display:none;width:48px;height:4px;background:#1a140c;border-radius:2px;overflow:hidden;border:1px solid #3a2a14;margin:-2px 0 2px 2px">
+<div id="bldBar" style="height:100%;width:0;background:linear-gradient(90deg,#f59e0b,#fde68a);transition:width .2s linear"></div>
+</div>
+<button onclick="G.tab('base','tech')" title="Исследования" type="button"><img alt="" class="hic hic-sq" data-ri="lab" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><small>Исслед.</small></button>
+<button onclick="G.tab('invtab')" title="Склад" type="button"><img alt="" class="hic hic-sq" data-ri="wh" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><small>Склад</small></button>
+</div>
+<div class="sc" id="mainSc">
+<div class="hud-side">
+<b onclick="G.tab('social','daily')"><span class="dot" id="dotBonus" style="display:none">!</span><img alt="" class="hic" data-ri="gems" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><em>Бонусы</em><small id="bonT">23:45:12</small></b>
+<b onclick="G.tab('social','ach')"><span class="dot" id="dotAch" style="display:none">!</span><img alt="" class="hic" data-ri="a1" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><em>Ачивки</em></b>
+<b onclick="G.tab('battle')"><span class="dot" id="dotWar" style="display:none">!</span><img alt="" class="hic" data-ri="b1" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwBSJaQAA3AA/valAAA="/><em>Война</em></b>
+</div>
+<div class="qb" onclick="G.questActionClick()">
+<span class="qb-bang">!</span>
+<div class="qb-left">
+<strong id="qo">Постройте ферму</strong>
+<small id="qc">ГЛАВА 1</small>
+<div class="qb-prog" id="qprog"></div>
+</div>
+<span class="qb-chest">📦</span>
+<button class="qb-btn" id="qbtn" onclick="event.stopPropagation();G.questActionClick()">К ферме ▶</button>
+</div>
+<div class="hud-clan" id="hudClan" onclick="G.tab('clan')">💬 [Клан] Рация на связи. Держитесь у стен.</div>
+<div class="hint-bar" id="hintBar" onclick="G.hintClick()" style="display:none">
+<div style="display:flex;align-items:center;gap:8px;"><span style="color:#f59e0b;font-weight:800;font-size:11px;letter-spacing:0.8px;text-transform:uppercase;background:rgba(245,158,11,0.15);padding:2px 6px;border-radius:4px;border:1px solid rgba(245,158,11,0.3);">👉 СОВЕТ</span><b id="hintTxt" style="color:#e5e7eb;font-weight:600;font-size:12px;"></b></div>
+</div>
+<div class="map-floating-btn" id="mapFloatingBtn" onclick="G.tab('map','world')" title="Открыть карту мира">
+<div class="bmb-pulse"></div>
+<span style="font-size:18px">🗺️</span>
+<span style="font-size:7.5px;font-weight:900;letter-spacing:.3px;color:#fcd34d">КАРТА</span>
+</div>
+<canvas id="mc"></canvas>
+<div class="notif-bar" id="notifBar"></div>
+<div class="sct">
+<button onclick="G.tab('battle','def')" title="Бой"><span>⚔</span></button>
+<button onclick="G.tab('battle','raids')" title="Рейды"><span>☣</span></button>
+<button onclick="G.tab('map','world')" title="Карта"><span>◎</span></button>
+</div>
+<div class="tt" id="btt"></div>
+</div>
+<div class="bp" id="bpan">
+<div class="bp-handle" id="bpHandle" onclick="G.toggleSheet()" title="Свернуть / развернуть"></div>
+<div class="tb" id="tbar"></div>
+<div class="st" id="stabs"></div>
+<div id="pn"></div>
+</div>
+</div>
+<div id="toast"></div>
+<div id="cineTop"></div>
+<div id="cineBot"></div>
+<div id="grain"></div>
+<div id="bootS" onclick="(function(e){var b=document.getElementById('bootS');if(b){b.classList.add('out');b.style.pointerEvents='none';b.style.opacity='0';setTimeout(function(){if(b&amp;&amp;b.parentNode)b.remove()},350)}if(window.G&amp;&amp;window.G.bootGo){try{window.G.bootGo()}catch(_){}}})(event)" ontouchend="(function(e){var b=document.getElementById('bootS');if(b){b.classList.add('out');b.style.pointerEvents='none';b.style.opacity='0';setTimeout(function(){if(b&amp;&amp;b.parentNode)b.remove()},350)}if(window.G&amp;&amp;window.G.bootGo){try{window.G.bootGo()}catch(_){}}})(event)"><div class="boot-grain"></div><div class="boot-in">
+<div class="boot-kick">⚠ СЕКТОР 7 · КАРАНТИН</div>
+<div class="boot-title">THE LAST PORT</div>
+<div class="boot-sub">Выжившие · Протокол «Мёртвый город»</div>
+<div class="boot-tag">«Мир умер тихо. Главное — не отзывать крики.»</div>
+<div style="font:600 10px/1.4 monospace;letter-spacing:2px;color:rgba(200,208,168,.6);text-align:center;margin-top:10px;text-transform:uppercase">Сборка v9.70 · Ежедневные приказы выживания и сундуки активности + Святилища</div>
+<button class="boot-btn" onclick="event.stopPropagation();(function(){var b=document.getElementById('bootS');if(b){b.classList.add('out');b.style.pointerEvents='none';b.style.opacity='0';setTimeout(function(){if(b&amp;&amp;b.parentNode)b.remove()},350)}if(window.G&amp;&amp;window.G.bootGo){try{window.G.bootGo()}catch(_){}}})()" ontouchend="event.stopPropagation();(function(){var b=document.getElementById('bootS');if(b){b.classList.add('out');b.style.pointerEvents='none';b.style.opacity='0';setTimeout(function(){if(b&amp;&amp;b.parentNode)b.remove()},350)}if(window.G&amp;&amp;window.G.bootGo){try{window.G.bootGo()}catch(_){}}})()">▶  Начать выживание</button>
+<svg aria-hidden="true" class="boot-sil" preserveaspectratio="xMidYMax slice" viewbox="0 0 1200 170"><defs><lineargradient id="bfog" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#aab3a4" stop-opacity="0"></stop><stop offset="1" stop-color="#aab3a4" stop-opacity=".09"></stop></lineargradient><g fill="#0e110e" id="wk"><circle cx="52" cy="25" r="11"></circle><path d="M36 40 Q50 33 64 40 L66 84 Q64 96 65 108 L60 166 L52 166 L50 112 L48 166 L40 166 L35 108 Q36 95 34 84 Z"></path><path d="M36 46 L16 76 L20 81 L38 55 Z"></path><path d="M64 46 L85 70 L82 76 L62 55 Z"></path></g></defs><use href="#wk" transform="translate(35,8) scale(0.72,0.72)" xlink:href="#wk"></use><use href="#wk" transform="translate(150,0) scale(-0.95,0.95)" xlink:href="#wk"></use><use href="#wk" transform="translate(262,14) scale(0.62,0.62)" xlink:href="#wk"></use><use href="#wk" transform="translate(380,0) scale(1.05,1.05)" xlink:href="#wk"></use><use href="#wk" transform="translate(515,6) scale(-0.8,0.8)" xlink:href="#wk"></use><use href="#wk" transform="translate(645,12) scale(0.7,0.7)" xlink:href="#wk"></use><use href="#wk" transform="translate(770,0) scale(1.15,1.15)" xlink:href="#wk"></use><use href="#wk" transform="translate(905,16) scale(-0.66,0.66)" xlink:href="#wk"></use><use href="#wk" transform="translate(1055,4) scale(0.92,0.92)" xlink:href="#wk"></use><rect fill="url(#bfog)" height="170" width="1200"></rect><rect fill="#040504" height="4" width="1200" y="166"></rect></svg>
+</div></div>
+<div id="tut"></div>
+
+
+
+<div aria-hidden="true" id="qfinger">
+<div class="qfinger-lab">К ферме</div>
+<svg class="qfinger-hand" height="64" viewbox="0 0 64 72" width="56">
+<path d="M28 6c3 0 5 2 5 6v16l1-8c0-3 3-5 6-4s4 4 4 7v10l2-6c1-3 4-4 6-3s3 4 3 7v18c0 12-8 22-22 22s-22-8-22-20V28c0-3 2-6 5-6s5 3 5 6v8V12c0-4 2-6 5-6z" fill="#f5d76e" stroke="#3a2a08" stroke-linejoin="round" stroke-width="3"></path>
+</svg>
+</div>
+
+
+
+
+
+
+
+
+<div id="verStamp772" style="position:fixed;bottom:3px;right:3px;z-index:100001;font:800 8px/1.2 system-ui;color:#0f172a;background:linear-gradient(135deg,#fbbf24,#f97316);padding:2px 7px;border-radius:8px;border:1px solid rgba(255,255,255,.35);box-shadow:0 2px 8px rgba(0,0,0,.4);opacity:.85;pointer-events:none;user-select:none">The Last Port · v9.70</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- THE WALKING DEAD: SURVIVORS - INTERACTIVE TOWER DEFENSE ENGINE (v9.70) -->
+
+<div class="hidden" id="twdDefenseOverlay">
+<!-- Top Defense Status Bar -->
+<div class="td-top-hud">
+<div class="td-wall-gauge">
+<div class="td-gauge-title">
+<span>🧱 ПРОЧНОСТЬ ВОРОТ</span>
+<span id="tdWallHpText">1000 / 1000</span>
+</div>
+<div class="td-gauge-bar">
+<div class="td-gauge-fill" id="tdWallHpFill"></div>
+</div>
+</div>
+<div class="td-wave-indicator">
+<div class="td-wave-title" id="tdWaveTitle">⚔️ ВОЛНА ОРДЫ 1</div>
+<div class="td-enemy-count" id="tdEnemyCount">Врагов: 24 · Натиск: Норма</div>
+</div>
+<div class="td-top-controls">
+<button class="td-btn-speed" id="tdSpeedBtn" onclick="TWD_Defense.toggleSpeed()">1X</button>
+<button class="td-btn-retreat" onclick="TWD_Defense.retreat()">✕ ОТСТУПИТЬ</button>
+</div>
+</div>
+<!-- Real-Time Tower Defense Battlefield Canvas -->
+<div class="td-canvas-container" id="tdCanvasContainer" onclick="TWD_Defense.handleCanvasClick(event)">
+<canvas id="tdCanvas"></canvas>
+</div>
+<!-- Bottom Hero Slots & Active Commander Skills -->
+<div class="td-bottom-hud">
+<!-- Stationed Wall Defenders -->
+<div class="td-heroes-bar" id="tdHeroesBar">
+<!-- Injected dynamically -->
+</div>
+<!-- Active Tactical Skills -->
+<div class="td-skills-row">
+<button class="td-skill-btn ready" id="tdSkill_molotov" onclick="TWD_Defense.activateSkill('molotov')">
+<div class="td-skill-ico">🔥</div>
+<div class="td-skill-name">МОЛОТОВ</div>
+<div class="td-skill-cd-overlay" id="tdSkillCd_molotov" style="display:none">0</div>
+</button>
+<button class="td-skill-btn ready" id="tdSkill_sniper" onclick="TWD_Defense.activateSkill('sniper')">
+<div class="td-skill-ico">🎯</div>
+<div class="td-skill-name">СНАЙПЕР</div>
+<div class="td-skill-cd-overlay" id="tdSkillCd_sniper" style="display:none">0</div>
+</button>
+<button class="td-skill-btn ready" id="tdSkill_shock" onclick="TWD_Defense.activateSkill('shock')">
+<div class="td-skill-ico">⚡</div>
+<div class="td-skill-name">ТОК-СЕТЬ</div>
+<div class="td-skill-cd-overlay" id="tdSkillCd_shock" style="display:none">0</div>
+</button>
+<button class="td-skill-btn ready" id="tdSkill_rally" onclick="TWD_Defense.activateSkill('rally')">
+<div class="td-skill-ico">📢</div>
+<div class="td-skill-name">КЛИЧ РАЖА</div>
+<div class="td-skill-cd-overlay" id="tdSkillCd_rally" style="display:none">0</div>
+</button>
+</div>
+</div>
+<!-- Victory / Defeat Modal -->
+<div class="td-result-modal" id="tdResultModal" style="display:none">
+<div class="td-result-card">
+<div class="td-result-title win" id="tdResultTitle">🏆 ВОЛНА ОТБИТА!</div>
+<div class="td-result-sub" id="tdResultSub">Цитадель выстояла под натиском орды ходячих!</div>
+<div class="td-rewards-grid" id="tdRewardsGrid">
+<!-- Injected dynamically -->
+</div>
+<button class="td-result-btn" id="tdResultBtn" onclick="TWD_Defense.closeResultModal()">ЗАБРАТЬ ТРОФЕИ И ВЕРНУТЬСЯ</button>
+</div>
+</div>
+</div>
+
+<!-- THE WALKING DEAD: SURVIVORS - ARMY CLASSES, T1-T4 BARRACKS & HOSPITAL SYSTEM (v9.70) -->
+
+<!-- TWD Army & Barracks Modal -->
+<div class="twd-army-modal-overlay hidden" id="twdArmyModal">
+<div class="twd-army-card">
+<div class="twd-army-header">
+<div class="twd-army-title" id="twdArmyTitle">⚔️ КАЗАРМА «ПОСЛЕДНЕГО ПОРТА»</div>
+<button class="twd-army-close" onclick="TWD_Army.closeModal()">✕</button>
+</div>
+<!-- Navigation Tabs -->
+<div class="twd-army-tabs">
+<button class="twd-army-tab-btn active" id="twdArmyTab_melee" onclick="TWD_Army.switchTab('melee')">🗡️ ЗАЩИТНИКИ</button>
+<button class="twd-army-tab-btn" id="twdArmyTab_ranged" onclick="TWD_Army.switchTab('ranged')">🏹 СТРЕЛКИ</button>
+<button class="twd-army-tab-btn" id="twdArmyTab_cav" onclick="TWD_Army.switchTab('cavalry')">🏍️ ВСАДНИКИ</button>
+<button class="twd-army-tab-btn" id="twdArmyTab_hosp" onclick="TWD_Army.switchTab('hospital')">🏥 ГОСПИТАЛЬ</button>
+</div>
+<!-- Triangle Counter Banner -->
+<div class="twd-triangle-bar">
+<span class="twd-tri-badge melee">🗡️ Защитники</span> ➔ бьют ➔ 
+      <span class="twd-tri-badge cav">🏍️ Всадников</span> ➔ бьют ➔ 
+      <span class="twd-tri-badge ranged">🏹 Стрелков</span> ➔ бьют ➔ 
+      <span class="twd-tri-badge melee">🗡️</span>
+</div>
+<!-- Scrollable Content Body -->
+<div class="twd-army-body" id="twdArmyBody">
+<!-- Injected Dynamically -->
+</div>
+</div>
+</div>
+
+<!-- THE WALKING DEAD: SURVIVORS - HERO BONDS & SPECIALIZATIONS SYSTEM (v9.70) -->
+
+
+<!-- THE WALKING DEAD: SURVIVORS - 3D INTERACTIVE OBSTACLE & FOG EXPANSION (v9.70) -->
+
+<!-- TWD Obstacle Modal -->
+<div class="twd-obs-modal-overlay hidden" id="twdObsModal">
+<div class="twd-obs-card">
+<div class="twd-obs-header">
+<div class="twd-obs-title" id="twdObsTitle">🌲 РАСЧИСТКА ЗАВАЛА</div>
+<button class="twd-obs-close" onclick="TWD_3D_Obstacles.closeModal()">✕</button>
+</div>
+<div class="twd-obs-desc" id="twdObsDesc">
+      Завал из вековых бревен и колючего терновника блокирует доступ к северному сектору базы.
+    </div>
+<div class="twd-obs-loot-box">
+<div class="twd-obs-loot-title">🎁 НАГРАДЫ ЗА РАСЧИСТКУ СЕКТОРА:</div>
+<div class="twd-obs-loot-text" id="twdObsLootText">🪵 +1200 Древесины, 💎 +15, Новая зона застройки</div>
+</div>
+<div id="twdObsReqText" style="font-size:10px;color:#94a3b8;display:flex;justify-content:space-between">
+<span>Требуется: ⚡ 10 Энергии</span>
+<span>Рабочие: 2 👷‍♂️</span>
+</div>
+<button class="twd-obs-btn-clear" id="twdObsClearBtn" onclick="TWD_3D_Obstacles.confirmClear()">
+      👷‍♂️ ОТПРАВИТЬ РАБОЧИХ НА РАСЧИСТКУ
+    </button>
+</div>
+</div>
+
+<!-- THE WALKING DEAD: SURVIVORS - INTERACTIVE SOS RADIO SCANNER (v9.70) -->
+
+<!-- TWD Radio Scanner Modal -->
+<div class="twd-radio-modal-overlay hidden" id="twdRadioModal">
+<div class="twd-radio-card">
+<div class="twd-radio-header">
+<div class="twd-radio-title">
+<span>📻</span>
+<span>РАДИОСТАНЦИЯ · СКАНЕР SOS-СИГНАЛОВ</span>
+</div>
+<button class="twd-radio-close" onclick="TWD_Radio.closeModal()">✕</button>
+</div>
+<!-- Oscilloscope & Signal Wave -->
+<div class="twd-oscilloscope">
+<canvas id="twdOscCanvas"></canvas>
+<div class="twd-freq-readout" id="twdFreqText">94.2 MHz</div>
+<div class="twd-signal-strength" id="twdSignalStrength">📡 Сигнал: 85% (Четкий прием)</div>
+</div>
+<!-- Frequency Tuning Slider -->
+<div class="twd-tuner-container">
+<div class="twd-tuner-label">
+<span>📻 Вращайте ручку настройки (88.0 – 108.0 MHz)</span>
+<span id="twdTargetFreq">Цель: 94.2 MHz</span>
+</div>
+<input class="twd-tuner-slider" id="twdFreqSlider" max="1080" min="880" oninput="TWD_Radio.handleTuning(this.value)" type="range" value="942"/>
+</div>
+<!-- Intercepted Message Card -->
+<div class="twd-intercept-card" id="twdInterceptCard">
+<div class="twd-intercept-title" id="twdSignalTitle">
+<span>🚨</span>
+<span>SOS: ГРУППА ВЫЖИВШИХ В АНГАРЕ</span>
+</div>
+<div class="twd-intercept-desc" id="twdSignalDesc">
+        «Прием! Мы забаррикадировались в старом рефрижераторе. Ходячие выламывают решетки. Если кто-то слышит — помогите!»
+      </div>
+<div id="twdSignalLoot" style="font-size:9.5px;color:#38bdf8;font-weight:800">
+        🎁 Награды: Новый Выживший, 🍖 +1200 Провианта, 💎 +25
+      </div>
+</div>
+<button class="twd-radio-btn-dispatch" id="twdRadioDispatchBtn" onclick="TWD_Radio.dispatchRescue()">
+      🚐 ОТПРАВИТЬ СПАСАТЕЛЬНЫЙ ОТРЯД (⚡ 10)
+    </button>
+</div>
+</div>
+
+<script src="js/engine3d.js"></script><script src="js/game.js"></script><script src="js/twd-systems.js"></script></body>
+</html>
